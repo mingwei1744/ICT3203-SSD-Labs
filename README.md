@@ -1,9 +1,5 @@
-# ICT3203-SSD-Labs
-ICT3203 Secure Software Development Labs
+# Using Docker-Compose
 
-# Branches
-- jenkins-docker-containers
-- jenkins-lab5
-- jenkins-lab6
-- jenkins-lab7a
-- jenkins-lab7b
+- Nginx setup with docker compose
+- Mysql setup with docker compose
+- Git server setup with docker compose
