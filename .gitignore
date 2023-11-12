@@ -1,0 +1,3 @@
+*.crt
+*.key
+/mysql_data
