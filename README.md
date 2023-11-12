@@ -7,7 +7,7 @@ This branch contains the docker containers configurations for Jenkins
 1. jenkins
 - Standalone jenkins with DinD
 2. jenkins-nginx
-- Jenkins resided behind a reverse proxy
+- Jenkins resided behind a reverse proxy with HTTPS
 
 # jenkins-nginx
 1. Create a ssl folder in the same directory as /jenkins-nginx
