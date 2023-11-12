@@ -1,1 +1,3 @@
-/ssl
+*.crt
+*.keys
+/mysql_data
