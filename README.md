@@ -1,1 +1,1 @@
-# ICT3203-SSD
+# Integrating Automated Integration and UI Testing into Jenkins Pipeline
