@@ -60,3 +60,7 @@ typings/
 
 .idea
 build
+
+*.crt
+*.key
+/mysql_data
