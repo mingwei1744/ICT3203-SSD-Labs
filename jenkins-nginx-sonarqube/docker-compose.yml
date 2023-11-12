@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  docker:
+    image: docker:dind
+    container_name: jenkins-docker
+    privileged: true
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    ports:
+      - "2376:2376"
+      - "3000:3000"
+      - "5000:5000"
+
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jenkins-blueocean:2.414.3-1
+    container_name: jenkins-blueocean
+    restart: on-failure
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+      # If you need to mount more vols, add here
+    ports:
+      - "50000:50000"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro # Self-signed Cert
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - jenkins
+    depends_on:
+      - jenkins
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    ports:
+      - "9000:9000"
+    networks:
+      - jenkins
+
+networks:
+  jenkins:
+    driver: bridge
+
+volumes:
+  jenkins-docker-certs:
+  jenkins-data:
